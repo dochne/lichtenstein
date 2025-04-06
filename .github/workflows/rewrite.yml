@@ -2,21 +2,29 @@ name: rewrite
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "main", "doug/other-branch" ]
 
 permissions:
   contents: write
 
 jobs:
-
   rewrite:
     name: Rewrite
     runs-on: ubuntu-latest
     timeout-minutes: 15
     
     steps:
+      - uses: actions/checkout@v4
+      - run: ls -lah
+      - run: cat .git/config
+      - run: git branch
       - name: Repaint the world!
         uses: dochne/workflows/lichtenstein@main
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           pattern: "[0,0,0,0,0,0,0,0,1,1,1,1,1,0,0,1,0,0,0,1,0,0,1,0,0,0,1,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,1,0,0,0,1,0,0,1,0,0,0,1,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,1,0,0,0,1,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,1,1,1,1,1,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,1,1,1,1,1,0,0,0,0,0,0,0,0,0,1,1,1,1,1,0,0,0,1,1,0,0,0,0,0,0,1,1,0,0,0,1,1,1,1,1,0,0,0,0,0,0,0,0,0,1,1,1,1,1,0,0,1,0,1,0,1,0,0,1,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,1,0,0,0,1,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,1,0,0,0,1,0,0,1,0,0,0,1,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,0,0,1,0,0,0,0,0,0,1,1,1,1,1,0,0,1,0,0,0,0,0,0,0,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]"
+      - run: git branch
+      - run: git log
+      # - run: cat fast-import.txt
+      - run: git fast-import < fast-import.txt
+      - run: git log
